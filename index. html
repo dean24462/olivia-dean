@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Olivia Dean — Artist & Songwriter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Olivia Dean — Official website. Music, shows, bookings, and contact." />
+  <style>
+    :root{
+      --accent:#D6336C; /* warm pink */
+      --dark:#0f1720;
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.06);
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#080808 0%,#0b0f14 100%);color:#fff;line-height:1.45;
+      -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    }
+    .container{max-width:var(--max-width);margin:0 auto;padding:28px}
+
+    /* Header */
+    header{position:sticky;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));border-bottom:1px solid rgba(255,255,255,0.03);z-index:40}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#7b2cbf);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .logo span{font-size:18px}
+    nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0}
+    nav a{color:inherit;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px}
+    nav a:hover{background:rgba(255,255,255,0.03)}
+    .cta{display:flex;gap:8px}
+    .btn{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;color:white;font-weight:700;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:48px 0}
+    .hero-left h1{font-size:34px;margin:0 0 12px}
+    .hero-left p{color:var(--muted);margin:0 0 18px}
+    .hero-actions{display:flex;gap:12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+    .cover{width:100%;height:420px;border-radius:12px;background-size:cover;background-position:center}
+
+    /* Sections */
+    section{padding:48px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    h2{margin:0 0 18px;font-size:22px}
+    .grid{display:grid;gap:18px}
+
+    /* Media grid */
+    .media-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .media-item{border-radius:12px;overflow:hidden}
+
+    /* Booking form */
+    form{display:grid;gap:10px}
+    label{font-size:13px;color:var(--muted)}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:#fff}
+    textarea{min-height:100px}
+
+    /* Shows list */
+    .show{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .show-info{display:flex;gap:12px;align-items:center}
+
+    /* Footer */
+    footer{padding:28px 0;color:var(--muted);text-align:center}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .cover{height:260px}
+      nav ul{display:none}
+    }
+
+    /* Small helper */
+    .muted{color:var(--muted)}
+    a.social{display:inline-flex;gap:8px;align-items:center;text-decoration:none;color:inherit}
+
+    /* Slideshow styling */
+    .slideshow {
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+    }
+    .slides img {
+      width: 100%;
+      display: none;
+      transition: opacity 1s ease-in-out;
+      filter: brightness(0.9);
+    }
+    .slides img.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Modal for ticket info */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: linear-gradient(180deg, rgba(20,20,20,0.95), rgba(15,20,30,0.95));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .modal h3 {
+      margin: 0 0 16px;
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .modal p {
+      margin: 0 0 20px;
+      color: var(--muted);
+    }
+    .modal .btn {
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: Inter, sans-serif;
+    }
+
+    /* Background fix */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: inherit;
+      backdrop-filter: brightness(0.6);
+      z-index: -1;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo"><span>OD</span></div>
+        <div>
+          <div style="font-weight:800">Olivia Dean</div>
+          <div style="font-size:12px;color:var(--muted)">Artist • Songwriter</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="booking.html">Booking</a></li>
+          <li><a href="shows.html">Shows</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="cta">
+        <button class="btn" onclick="scrollToSection('booking')">Book Me</button>
+        <button class="btn ghost" onclick="openWhatsApp()">Chat on WhatsApp</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Image Slideshow Section -->
+  <section class="slideshow">
+    <div class="slides">
+      <!-- Use your first image here -->
+      <img src="olivia dean 2.jpg" class="slide active" alt="Olivia closeup">
+      <!-- Use your second image here -->
+      <img src="olivia dean 3.jpg" class="slide" alt="Olivia editorial">
+      <!-- Use your third image here -->
+      <img src="olivia dean 4.jpg" class="slide" alt="Olivia live on stage">
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- HERO / HOME -->
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <h1>Olivia Dean — Artist • Songwriter • Performer</h1>
+        <p class="muted">Welcome to my official website. I create music that speaks to the soul — blending rhythm, emotion, and real experiences. This is the home of my latest releases, upcoming shows, exclusive content, and direct bookings.</p>
+        <p class="muted">Whether you’re a fan, an event organizer, or someone discovering my sound for the first time — you’re in the right place.</p>
+        <div class="hero-actions">
+          <button class="btn" onclick="scrollToSection('booking')">Book Me for Events</button>
+          <a class="btn ghost" href="#" onclick="openTicketModal(event)">Buy Tickets to My Shows</a>
+          <button class="btn ghost" onclick="scrollToSection('music')">Listen to My Music</button>
+        </div>
+
+        <div style="margin-top:20px">
+          <h3 style="margin:0 0 8px">Listen</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;opacity:0.6">
+            <div style="width:280px;height:80px;background:rgba(255,255,255,0.03);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted)">Spotify Embed (Placeholder)</div>
+            <div style="width:280px;height:80px;background:rgba(255,255,255,0.03);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">YouTube Embed (Placeholder)</div>
+          </div>
+        </div>
+
+        <div style="margin-top:22px;color:var(--muted)">
+          <strong>Upcoming:</strong> Live at Freedom Park — November 2, 2025 — <a href="#" onclick="openTicketModal(event)">Get tickets</a>
+        </div>
+      </div>
+      <div class="card">
+        <!-- Use your first image as the cover -->
+        <div class="cover" style="background-image: url('olivia dean 2.jpg');background-size:cover;background-position:center;justify-content:space-between;align-items:center;margin-top:12px">
+          <div>
+            <div style="font-weight:700">New Single</div>
+            <div class="muted" style="font-size:13px">"Heartbeat (Demo)" — out now</div>
+          </div>
+          <a class="btn" href="#music">Listen</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Olivia Dean</h2>
+      <div class="card">
+        <p style="margin:0"><strong>About Olivia Dean</strong></p>
+        <p style="margin-top:8px">Olivia Dean is an artist and songwriter creating music that blends storytelling with rhythm. Her sound is inspired by everyday life, real emotions, and the desire to connect with people through melody and words.</p>
+        <p class="muted" style="margin-top:12px">From live performances to studio recordings, Olivia has built her craft around authenticity and energy. Her goal is to make music that moves people — whether it’s on stage, through speakers, or in intimate moments.</p>
+        <p class="muted" style="margin-top:12px">Over the years, Olivia has performed at various events, worked with creatives across genres, and continued to grow her identity as an artist. Her passion is to deliver unforgettable performances and timeless music.</p>
+        <p style="margin-top:12px">Thank you for supporting her journey. This is only the beginning.</p>
+      </div>
+    </section>
+
+    <!-- MUSIC -->
+    <section id="music">
+      <h2>Music & Videos</h2>
+      <div class="grid media-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="media-item card">
+          <h3 style="margin:0 0 10px">Latest Music Video</h3>
+          <div style="position:relative;padding-top:56.25%;background:rgba(255,255,255,0.03);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">
+            YouTube Video (Placeholder)
+          </div>
+        </div>
+
+        <div class="media-item card">
+          <h3 style="margin:0 0 10px">Featured Tracks</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:14px">
+            <div style="padding:8px;background:rgba(255,255,255,0.03);border-radius:6px">Track 1 (Demo)</div>
+            <div style="padding:8px;background:rgba(255,255,255,0.03);border-radius:6px">Track 2 (Demo)</div>
+            <a class="muted" href="#" style="font-size:13px">See full discography</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px" class="card">
+        <h3 style="margin:0 0 8px">Gallery</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <!-- Gallery uses all three of your images -->
+          <img src="olivia dean 2.jpg" alt="Olivia on stage" style="width:150px;height:100px;object-fit:cover;border-radius:8px">
+          <img src="olivia dean 3.jpg" alt="Olivia studio" style="width:150px;height:100px;object-fit:cover;border-radius:8px">
+          <img src="olivia dean 4.jpg" alt="Olivia promo" style="width:150px;height:100px;object-fit:cover;border-radius:8px">
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOWS / TICKETS -->
+    <section id="shows">
+      <h2>Upcoming Shows</h2>
+      <div class="grid" style="grid-template-columns:1fr;gap:12px">
+        <div class="show card">
+          <div class="show-info">
+            <div>
+              <div style="font-weight:700">Live at Capital One Arena</div>
+              <div class="muted" style="font-size:13px">Dec 16, 2025 • Washington, DC, USA</div>
+            </div>
+          </div>
+          <div>
+            <a class="btn" href="#" onclick="openTicketModal(event)">Buy Tickets</a>
+          </div>
+        </div>
+
+        <div class="show card">
+          <div class="show-info">
+            <div>
+              <div style="font-weight:700">OVO Hydro</div>
+              <div class="muted" style="font-size:13px">April 22, 2026 • Glasgow, UK</div>
+            </div>
+          </div>
+          <div>
+            <a class="btn" href="#" onclick="openTicketModal(event)">Buy Tickets</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:18px" class="muted">Tip: Use Eventbrite, Tito, or a Paystack/Flutterwave checkout link for paid tickets and embed the link above.</div>
+    </section>
+
+    <!-- BOOKING -->
+    <section id="booking">
+      <h2>Booking</h2>
+      <div class="card">
+        <p style="margin:0">Book <strong>Olivia Dean</strong> for Your Event</p>
+        <p class="muted" style="margin-top:8px">Thank you for your interest in booking Olivia. She is available for:</p>
+        <ul style="margin-top:8px">
+          <li>🎤 Concerts</li>
+          <li>🎉 Festivals</li>
+          <li>🏙️ Club Performances</li>
+          <li>🎧 Private Parties</li>
+          <li>💍 Weddings</li>
+          <li>🎓 School Events</li>
+          <li>🏆 Award Nights</li>
+          <li>📹 Music Features / Collaborations</li>
+          <li>🎙️ Studio Sessions</li>
+        </ul>
+        <p class="muted" style="margin-top:8px">Please fill out the booking form below with your event details, and the team will respond as soon as possible.</p>
+
+        <!-- Booking form -->
+        <form id="bookingForm">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <label for="name">Full Name</label>
+              <input id="name" name="name" required>
+            </div>
+            <div>
+              <label for="email">Email address</label>
+              <input id="email" type="email" name="email" required>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+            <div>
+              <label for="eventType">Event type</label>
+              <select id="eventType" name="eventType" required>
+                <option>Concert</option>
+                <option>Club</option>
+                <option>Wedding</option>
+                <option>Private Party</option>
+                <option>Festival</option>
+                <option>Studio Session</option>
+              </select>
+            </div>
+            <div>
+              <label for="date">Event date</label>
+              <input id="date" name="date" type="date" required>
+            </div>
+          </div>
+
+          <div style="margin-top:8px">
+            <label for="location">Event location</label>
+            <input id="location" name="location" placeholder="City, Venue" required>
+          </div>
+
+          <div style="margin-top:8px">
+            <label for="budget">Budget (optional)</label>
+            <input id="budget" name="budget" placeholder="e.g. USD 50,000">
+          </div>
+
+          <div style="margin-top:8px">
+            <label for="message">Message / Additional details</label>
+            <textarea id="message" name="message"></textarea>
+          </div>
+
+          <div style="margin-top:12px;display:flex;gap:10px;align-items:center">
+            <button type="button" class="btn" onclick="alert('Form submission would be connected to Formspree in production.')">Send Booking Request</button>
+            <button type="button" class="btn ghost" onclick="openWhatsApp()">Chat on WhatsApp</button>
+          </div>
+        </form>
+
+        <p class="muted" style="margin-top:12px">For urgent bookings or direct communication: <strong>Chat on WhatsApp: +13144145895</strong></p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="card" style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <strong>WhatsApp</strong>
+          <div class="muted">+13144145895 — <a href="#" onclick="openWhatsApp()">Chat on WhatsApp</a></div>
+        </div>
+
+        <div>
+          <strong>Management / Email</strong>
+          <div class="muted">officialoliviadean@proton.me</div>
+        </div>
+
+        <div>
+          <strong>Social</strong>
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <a class="social" href="https://instagram.com/" target="_blank">Instagram</a>
+            <a class="social" href="https://youtube.com/" target="_blank">YouTube</a>
+            <a class="social" href="https://twitter.com/" target="_blank">X</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Olivia Dean — All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Ticket Modal -->
+  <div id="ticketModal" class="modal">
+    <div class="modal-content">
+      <h3>Get Your Tickets</h3>
+      <p>Contact this number for your tickets:</p>
+      <p style="font-size:18px;font-weight:700;color:white">+13144145895</p>
+      <button class="btn" onclick="document.getElementById('ticketModal').style.display='none'">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Utilities
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function openWhatsApp(){
+      const number = '13144145895';
+      const url = `https://wa.me/${number}`; // Fixed: removed extra spaces
+      window.open(url,'_blank');
+    }
+    function openTicketModal(e){
+      e.preventDefault();
+      document.getElementById('ticketModal').style.display = 'flex';
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Slideshow
+    let index = 0;
+    const slides = document.querySelectorAll('.slide');
+    function showSlides(){
+      slides.forEach(s => s.classList.remove('active'));
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+    }
+    setInterval(showSlides, 4000);
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('ticketModal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
